@@ -1,5 +1,7 @@
 package com.tree.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -63,8 +65,8 @@ public class TreeOwner {
 	@Column(name = "latitude")
 	private double latitude;
 
-	@Column(name = "age")
-	private int age;
+	@Column(name = "dob")
+	private Date DOB;
 
 	@Column(name = "landmark")
 	private String landmark;
