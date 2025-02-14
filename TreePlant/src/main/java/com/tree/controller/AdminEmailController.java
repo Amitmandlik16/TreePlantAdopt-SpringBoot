@@ -14,14 +14,25 @@ public class AdminEmailController {
 	@Autowired
 	private AdminEmailService adminEmailService;
 
-	// ✅ API to send emails to all TreeOwners using JSON Request Body
-	@PostMapping("/send-emails")
-	public ResponseEntity<String> sendEmailsToAllTreeOwners(@RequestBody EmailRequest emailRequest) {
+	// ✅ API to send plain text emails to all TreeOwners using JSON Request Body
+	@PostMapping("/send-plainemails")
+	public ResponseEntity<String> sendPlainEmailsToAllTreeOwners(@RequestBody EmailRequest emailRequest) {
 		if (emailRequest.getSubject() == null || emailRequest.getMessage() == null) {
 			return ResponseEntity.badRequest().body("Subject and message are required!");
 		}
 
-		adminEmailService.sendEmailsToAllTreeOwners(emailRequest.getSubject(), emailRequest.getMessage());
-		return ResponseEntity.ok("Emails sent successfully to all tree owners!");
+		adminEmailService.sendPlainEmailsToAllTreeOwners(emailRequest.getSubject(), emailRequest.getMessage());
+		return ResponseEntity.ok("Plain text emails sent successfully to all tree owners!");
+	}
+
+	// ✅ API to send emails to all TreeOwners using JSON Request Body
+	@PostMapping("/send-htmlemails")
+	public ResponseEntity<String> sendhtmlEmailsToAllTreeOwners(@RequestBody EmailRequest emailRequest) {
+		if (emailRequest.getSubject() == null || emailRequest.getMessage() == null) {
+			return ResponseEntity.badRequest().body("Subject and message are required!");
+		}
+
+		adminEmailService.sendHtmlEmailsToAllTreeOwners(emailRequest.getSubject(), emailRequest.getMessage());
+		return ResponseEntity.ok("HTML Formatted Emails sent successfully to all tree owners!");
 	}
 }
