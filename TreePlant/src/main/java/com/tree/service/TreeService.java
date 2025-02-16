@@ -5,8 +5,11 @@ import com.tree.entity.TreeOwner;
 import com.tree.repository.TreeOwnerepo;
 import com.tree.repository.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -20,11 +23,18 @@ public class TreeService {
 	@Autowired
 	private TreeOwnerepo treeOwnerepo;
 
+	@Autowired
+	private FileService fileService;
+
+	@Value("${project.image.tree}")
+	private String treepath;
+
 	public List<Tree> getTreesByOwnerId(long ownerId) {
 		return treeRepository.findByTreeOwnerId(ownerId);
 	}
 
-	public Tree createTree(Tree tree) {
+	// ✅ Register new tree owner
+	public Tree createTree(MultipartFile image, Tree tree) throws IOException {
 		tree.setRewards(5); // Initial 5 rewards on tree registration
 
 		TreeOwner treeOwner = tree.getTreeOwner();
@@ -36,6 +46,8 @@ public class TreeService {
 			// ✅ Save the updated TreeOwner
 			treeOwnerepo.save(treeOwner);
 		}
+		String imgname = fileService.uploadImage(treepath, image);
+		tree.setTreeImg(imgname);
 
 		// ✅ Set the current date as registered date
 		tree.setRegisteredDate(LocalDate.now());
