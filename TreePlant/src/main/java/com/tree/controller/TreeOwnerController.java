@@ -1,8 +1,12 @@
 package com.tree.controller;
 
 import com.tree.dto.ForgotPasswordRequest;
+import com.tree.entity.Complaint;
+import com.tree.entity.Feedback;
 import com.tree.entity.TreeOwner;
+import com.tree.service.ComplaintService;
 import com.tree.service.EmailService;
+import com.tree.service.FeedbackService;
 import com.tree.service.TreeOwnerService;
 
 import jakarta.mail.MessagingException;
@@ -25,6 +29,23 @@ public class TreeOwnerController {
 
 	@Autowired
 	private EmailService emailService;
+
+	@Autowired
+	private ComplaintService service;
+
+	@Autowired
+	private FeedbackService feedbackService;
+
+	@PostMapping("/complaint")
+	public ResponseEntity<Complaint> submitComplaint(@RequestBody Complaint complaint) {
+		Complaint savedComplaint = service.submitComplaint(complaint);
+		return ResponseEntity.ok(savedComplaint);
+	}
+
+	@PostMapping("/feedback")
+	public Feedback registerFeedback(@RequestBody Feedback feedback) {
+		return feedbackService.saveFeedback(feedback);
+	}
 
 	// ✅ Login API
 	@PostMapping("/login")

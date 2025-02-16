@@ -1,8 +1,13 @@
 package com.tree.controller;
 
 import com.tree.dto.Admin;
+import com.tree.entity.Complaint;
+import com.tree.entity.Feedback;
 import com.tree.entity.TreeOwner;
 import com.tree.service.AdminService;
+import com.tree.service.ComplaintService;
+import com.tree.service.FeedbackService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +22,22 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+
+	@Autowired
+	private ComplaintService complaintService;
+
+	@Autowired
+	private FeedbackService feedbackService;
+
+	@GetMapping("/getfeedbacks")
+	public List<Feedback> getAllFeedbacks() {
+		return feedbackService.getAllFeedbacks();
+	}
+
+	@GetMapping("/getcomplaints")
+	public List<Complaint> getAllComplaints() {
+		return complaintService.getAllComplaints();
+	}
 
 	// ✅ Login API
 	@PostMapping("/login")
