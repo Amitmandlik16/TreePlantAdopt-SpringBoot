@@ -6,25 +6,26 @@ import org.springframework.web.bind.annotation.*;
 
 import com.tree.service.TreeOwnerService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/validate")
 public class TreeOwnerValidationController {
 
-    @Autowired
-    private TreeOwnerService validationService;
+	@Autowired
+	private TreeOwnerService validationService;
 
-    @GetMapping("/username")
-    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
-        return ResponseEntity.ok(validationService.isUsernameExists(username));
-    }
+	@GetMapping("/username")
+	public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+		return ResponseEntity.ok(validationService.isUsernameExists(username));
+	}
 
-    @GetMapping("/mobile")
-    public ResponseEntity<Boolean> checkMobileNumber(@RequestParam String mobileNumber) {
-        return ResponseEntity.ok(validationService.isMobileNumberExists(mobileNumber));
-    }
+	@GetMapping("/mobile")
+	public ResponseEntity<Boolean> checkMobileNumber(@RequestParam String mobileNumber) {
+		return ResponseEntity.ok(validationService.isMobileNumberExists(mobileNumber));
+	}
 
-    @GetMapping("/email")
-    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
-        return ResponseEntity.ok(validationService.isEmailExists(email));
-    }
+	@GetMapping("/email")
+	public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+		return ResponseEntity.ok(validationService.isEmailExists(email));
+	}
 }

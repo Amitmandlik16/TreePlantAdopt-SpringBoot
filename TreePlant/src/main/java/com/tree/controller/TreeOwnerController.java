@@ -1,6 +1,5 @@
 package com.tree.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tree.dto.ForgotPasswordRequest;
 import com.tree.entity.TreeOwner;
 import com.tree.service.TreeOwnerService;
@@ -19,8 +18,6 @@ public class TreeOwnerController {
 
 	@Autowired
 	private TreeOwnerService treeOwnerService;
-	
-	
 
 	// ✅ Login API
 	@PostMapping("/login")
@@ -33,7 +30,7 @@ public class TreeOwnerController {
 	public ResponseEntity<TreeOwner> registerOwner(@RequestPart("treeOwner") TreeOwner treeOwner,
 			@RequestParam("image") MultipartFile image) throws IOException {
 
-		return ResponseEntity.ok(treeOwnerService.createOwner(image,treeOwner));
+		return ResponseEntity.ok(treeOwnerService.createOwner(image, treeOwner));
 
 	}
 

@@ -20,6 +20,7 @@ import com.tree.service.FileService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/files")
 public class FileController {

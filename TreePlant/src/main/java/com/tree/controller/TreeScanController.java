@@ -1,6 +1,5 @@
 package com.tree.controller;
 
-import com.tree.entity.Tree;
 import com.tree.entity.TreeScan;
 import com.tree.service.TreeScanService;
 import org.springframework.beans.factory.annotation.Autowired;
