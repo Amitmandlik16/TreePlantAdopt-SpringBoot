@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tree.service.FileService;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -38,12 +39,17 @@ public class FileController {
     @Value("${project.image.treescan}")
     private String treeScanPath;
 
-    // Mapping for different image categories
-    private final Map<String, String> imagePaths = Map.of(
-        "treeowners", treeownersPath,
-        "tree", treePath,
-        "treescan", treeScanPath
-    );
+    private Map<String, String> imagePaths;
+
+    // Constructor to initialize the imagePaths map
+    @PostConstruct
+    public void init() {
+        imagePaths = Map.of(
+            "treeowners", treeownersPath,
+            "tree", treePath,
+            "treescan", treeScanPath
+        );
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<FileResponse> fileUpload(@RequestParam("image") MultipartFile image) {
