@@ -65,7 +65,7 @@ public class TreeOwner {
 	private double latitude;
 
 	@Column(name = "dob")
-	private Date DOB;
+	private String DOB;
 
 	@Column(name = "landmark")
 	private String landmark;
