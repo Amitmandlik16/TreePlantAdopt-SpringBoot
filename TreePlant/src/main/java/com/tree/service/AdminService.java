@@ -1,5 +1,6 @@
 package com.tree.service;
 
+import com.tree.dto.Admin;
 import com.tree.entity.TreeOwner;
 import com.tree.repository.TreeOwnerepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,28 @@ import java.util.List;
 @Service
 public class AdminService {
 
-    @Autowired
-    private TreeOwnerepo treeOwnerepo;
+	@Autowired
+	private TreeOwnerepo treeOwnerepo;
 
-    // ✅ Fetch all tree owners
-    public List<TreeOwner> getAllTreeOwners() {
-        return treeOwnerepo.findAll();
-    }
+	// ✅ Fetch all tree owners
+	public List<TreeOwner> getAllTreeOwners() {
+		return treeOwnerepo.findAll();
+	}
 
-    // ✅ Fetch tree owner by ID
-    public TreeOwner getTreeOwnerById(long id) {
-        return treeOwnerepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tree Owner not found with ID: " + id));
-    }
+	// ✅ Login logic
+	public String login(Admin admin) {
+		System.out.println("username="+admin.getUsername() );
+		System.out.println("password="+admin.getPassword() );
+		if (admin.getUsername().equals("admin") && admin.getPassword().equals("admin")) {
+			return "Successfull";
+		} else {
+			return "Failed";
+		}
+	}
+
+	// ✅ Fetch tree owner by ID
+	public TreeOwner getTreeOwnerById(long id) {
+		return treeOwnerepo.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tree Owner not found with ID: " + id));
+	}
 }

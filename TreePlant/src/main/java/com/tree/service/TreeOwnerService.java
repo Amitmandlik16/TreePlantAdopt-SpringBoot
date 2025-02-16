@@ -14,13 +14,16 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -40,6 +43,12 @@ public class TreeOwnerService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private FileService fileService;
+	
+	@Value("${project.image.treeowners}")
+	private String treeownerspath;
 
 	// ✅ Login logic
 	public TreeOwner login(String username, String password) {
@@ -48,9 +57,11 @@ public class TreeOwnerService {
 	}
 
 	// ✅ Register new tree owner
-	public TreeOwner createOwner(TreeOwner treeOwner) {
+	public TreeOwner createOwner(MultipartFile image,TreeOwner treeOwner) throws IOException {
 		treeOwner.setTotalTrees(0);
 		treeOwner.setTotalRewards(0);
+		String imgname=fileService.uploadImage(treeownerspath, image);	
+		treeOwner.setProfileImg(imgname);
 		return treeOwnerepo.save(treeOwner);
 	}
 

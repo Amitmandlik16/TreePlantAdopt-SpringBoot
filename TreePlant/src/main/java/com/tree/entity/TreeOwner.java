@@ -34,9 +34,8 @@ public class TreeOwner {
 	@Column(name = "total_trees")
 	private int totalTrees;
 
-	@Lob
 	@Column(name = "profile_img")
-	private byte[] profileImg;
+	private String profileImg;
 
 	@Column(name = "total_rewards")
 	private int totalRewards;
