@@ -2,7 +2,11 @@ package com.tree.controller;
 
 import com.tree.dto.ForgotPasswordRequest;
 import com.tree.entity.TreeOwner;
+import com.tree.service.EmailService;
 import com.tree.service.TreeOwnerService;
+
+import jakarta.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,9 @@ public class TreeOwnerController {
 
 	@Autowired
 	private TreeOwnerService treeOwnerService;
+
+	@Autowired
+	private EmailService emailService;
 
 	// ✅ Login API
 	@PostMapping("/login")
@@ -64,4 +71,15 @@ public class TreeOwnerController {
 	public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
 		return ResponseEntity.ok(treeOwnerService.forgotPassword(request));
 	}
+
+	@PostMapping("/invitemail")
+	public ResponseEntity<String> sendInvitation(@RequestBody Map<String, Object> request) throws MessagingException {
+		String invitedName = (String) request.get("invitedName");
+		String invitedEmail = (String) request.get("invitedEmail");
+		long id = Long.parseLong(request.get("id").toString());
+
+		emailService.sendHtmlInvitationEmail(invitedName, invitedEmail, id);
+		return ResponseEntity.ok("Invitation email sent to " + invitedEmail);
+	}
+
 }
