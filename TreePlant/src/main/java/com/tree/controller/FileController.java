@@ -40,6 +40,9 @@ public class FileController {
     @Value("${project.image.treescan}")
     private String treeScanPath;
 
+    @Value("${project.image.post}")
+    private String postPath;
+
     private Map<String, String> imagePaths;
 
     // Constructor to initialize the imagePaths map
@@ -48,7 +51,8 @@ public class FileController {
         imagePaths = Map.of(
             "treeowners", treeownersPath,
             "tree", treePath,
-            "treescan", treeScanPath
+            "treescan", treeScanPath,
+            "post",postPath
         );
     }
 

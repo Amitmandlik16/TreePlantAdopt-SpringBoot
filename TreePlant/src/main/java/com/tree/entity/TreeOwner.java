@@ -1,7 +1,5 @@
 package com.tree.entity;
 
-import java.sql.Date;
-
 import jakarta.persistence.*;
 import lombok.*;
 
