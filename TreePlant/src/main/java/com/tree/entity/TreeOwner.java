@@ -59,10 +59,10 @@ public class TreeOwner {
 	private String pincode;
 
 	@Column(name = "longitude")
-	private double longitude;
+	private String longitude;
 
 	@Column(name = "latitude")
-	private double latitude;
+	private String latitude;
 
 	@Column(name = "dob")
 	private String DOB;
