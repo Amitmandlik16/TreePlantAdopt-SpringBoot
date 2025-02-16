@@ -43,12 +43,24 @@ public class TreeOwnerService {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private FileService fileService;
-	
+
 	@Value("${project.image.treeowners}")
 	private String treeownerspath;
+
+	public boolean isUsernameExists(String username) {
+		return treeOwnerepo.existsByUsername(username);
+	}
+
+	public boolean isMobileNumberExists(String mobileNumber) {
+		return treeOwnerepo.existsByMobileNumber(mobileNumber);
+	}
+
+	public boolean isEmailExists(String email) {
+		return treeOwnerepo.existsByEmail(email);
+	}
 
 	// ✅ Login logic
 	public TreeOwner login(String username, String password) {
@@ -57,10 +69,10 @@ public class TreeOwnerService {
 	}
 
 	// ✅ Register new tree owner
-	public TreeOwner createOwner(MultipartFile image,TreeOwner treeOwner) throws IOException {
+	public TreeOwner createOwner(MultipartFile image, TreeOwner treeOwner) throws IOException {
 		treeOwner.setTotalTrees(0);
 		treeOwner.setTotalRewards(0);
-		String imgname=fileService.uploadImage(treeownerspath, image);	
+		String imgname = fileService.uploadImage(treeownerspath, image);
 		treeOwner.setProfileImg(imgname);
 		return treeOwnerepo.save(treeOwner);
 	}
@@ -199,7 +211,8 @@ public class TreeOwnerService {
 
 		Message message = Message.creator(new PhoneNumber("+91" + toPhoneNumber), // Recipient
 				new PhoneNumber("+18483445411"), // Twilio Phone Number
-				"\n\n🌳 TreeAdoption: \nHello " +firstName +" "+ lastName+ "\n UserName :"+userName+"\nYour temporary password is " + tempPassword + ". Please update it after logging in.")
+				"\n\n🌳 TreeAdoption: \nHello " + firstName + " " + lastName + "\n UserName :" + userName
+						+ "\nYour temporary password is " + tempPassword + ". Please update it after logging in.")
 				.create();
 
 		System.out.println("SMS sent! SID: " + message.getSid());

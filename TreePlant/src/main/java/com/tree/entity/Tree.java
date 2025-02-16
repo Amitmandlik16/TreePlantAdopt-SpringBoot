@@ -30,9 +30,8 @@ public class Tree {
 	@Column(name = "registered_time")
 	private LocalTime registeredtime;
 
-	@Lob
 	@Column(name = "tree_img")
-	private byte[] treeImg;
+	private String treeImg;
 
 	@Column(name = "rewards")
 	private int rewards;

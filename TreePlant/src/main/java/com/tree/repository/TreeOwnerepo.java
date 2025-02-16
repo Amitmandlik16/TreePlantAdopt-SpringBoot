@@ -13,4 +13,10 @@ public interface TreeOwnerepo extends JpaRepository<TreeOwner, Long> {
 
 	List<TreeOwner> findTop100ByOrderByTotalRewardsDesc();
 
+	boolean existsByUsername(String username);
+
+	boolean existsByMobileNumber(String mobileNumber);
+
+	boolean existsByEmail(String email);
+
 }
