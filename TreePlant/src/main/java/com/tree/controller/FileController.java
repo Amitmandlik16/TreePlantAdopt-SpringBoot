@@ -42,21 +42,20 @@ public class FileController {
 
     @Value("${project.image.post}")
     private String postPath;
-    
+
     @Value("${project.image.donatetree}")
     private String donateTreePath;
 
     private Map<String, String> imagePaths;
 
-    // Constructor to initialize the imagePaths map
     @PostConstruct
     public void init() {
         imagePaths = Map.of(
             "treeowners", treeownersPath,
             "tree", treePath,
             "treescan", treeScanPath,
-            "post",postPath
-            ,"donatetreeimg",donateTreePath
+            "post", postPath,
+            "donatetreeimg", donateTreePath
         );
     }
 
@@ -95,6 +94,55 @@ public class FileController {
             StreamUtils.copy(resource, response.getOutputStream());
         } catch (IOException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading image");
+        }
+    }
+
+    // Update image
+    @PostMapping("/update/{category}/{imageName}")
+    public ResponseEntity<FileResponse> updateImage(@PathVariable String category, 
+                                                    @PathVariable String imageName, 
+                                                    @RequestParam("image") MultipartFile image) {
+        String folderPath = imagePaths.get(category);
+        if (folderPath == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(new FileResponse(null, "Invalid image category"));
+        }
+
+        try {
+            // Delete the existing image
+            fileService.deleteImage(folderPath, imageName);
+            
+            // Upload new image
+            String updatedImageName = fileService.uploadImage(folderPath, image);
+            return ResponseEntity.ok(new FileResponse(updatedImageName, "Image updated successfully!"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(new FileResponse(null, "Image update failed!"));
+        }
+    }
+
+    // Delete image
+    @DeleteMapping("/delete/{category}/{imageName}")
+    public ResponseEntity<FileResponse> deleteImage(@PathVariable String category, 
+                                                    @PathVariable String imageName) {
+        String folderPath = imagePaths.get(category);
+        if (folderPath == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(new FileResponse(null, "Invalid image category"));
+        }
+
+        try {
+            // Delete the image
+            boolean isDeleted = fileService.deleteImage(folderPath, imageName);
+            if (isDeleted) {
+                return ResponseEntity.ok(new FileResponse(null, "Image deleted successfully!"));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                     .body(new FileResponse(null, "Image not found"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body(new FileResponse(null, "Image deletion failed!"));
         }
     }
 }
