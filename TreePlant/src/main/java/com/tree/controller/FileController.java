@@ -42,6 +42,9 @@ public class FileController {
 
     @Value("${project.image.post}")
     private String postPath;
+    
+    @Value("${project.image.donatetree}")
+    private String donateTreePath;
 
     private Map<String, String> imagePaths;
 
@@ -53,6 +56,7 @@ public class FileController {
             "tree", treePath,
             "treescan", treeScanPath,
             "post",postPath
+            ,"donatetreeimg",donateTreePath
         );
     }
 
