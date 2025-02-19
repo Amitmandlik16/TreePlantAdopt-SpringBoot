@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +45,9 @@ public class Tree {
 	private double latitude;
 
 	@ManyToOne
-	@JoinColumn(name = "tree_owner_id", nullable = false) // Foreign key column
+	@JsonIgnoreProperties(value = { "password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
+			"totalRewards", "country", "state", "district", "taluka", "village", "pincode", "longitude", "latitude",
+			"landmark", "mobileNumber", "email", "dob" })
+	@JoinColumn(name = "tree_owner_id", nullable = false)
 	private TreeOwner treeOwner;
 }

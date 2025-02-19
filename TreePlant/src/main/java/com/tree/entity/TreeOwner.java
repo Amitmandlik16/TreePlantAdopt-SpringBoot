@@ -1,5 +1,7 @@
 package com.tree.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +19,7 @@ public class TreeOwner {
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 
+	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
 

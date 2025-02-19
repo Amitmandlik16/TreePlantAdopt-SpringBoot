@@ -8,6 +8,8 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "tree_plantation_events")
 @Getter
@@ -33,6 +35,9 @@ public class TreePlantationEvent {
 	private String description;
 
 	@ManyToMany
+	@JsonIgnoreProperties(value = { "password", "middleName", "totalTrees", "profileImg", "totalRewards", "country",
+			"state", "district", "taluka", "village", "pincode", "longitude", "latitude", "landmark", "mobileNumber",
+			"email", "dob" })
 	@JoinTable(name = "event_participants", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "tree_owner_id"))
 	private Set<TreeOwner> participants = new HashSet<>();
 }

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +22,11 @@ public class Complaint {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "tree_owner_id", nullable = false) // Foreign key column
-	private TreeOwner treeOwnerId;
+	@JsonIgnoreProperties(value = { "id","password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
+			"totalRewards", "country", "state", "district", "taluka", "village", "pincode", "longitude", "latitude",
+			"landmark", "mobileNumber", "email", "dob" })
+	@JoinColumn(name = "tree_owner_id", nullable = false)
+	private TreeOwner treeOwner;
 
 	private String subject;
 	private String description;

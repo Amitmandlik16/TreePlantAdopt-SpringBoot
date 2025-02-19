@@ -2,6 +2,9 @@ package com.tree.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -74,6 +77,7 @@ public class TreeScan {
 	private double oxygenProduction; // Oxygen generated (kg/year)
 
 	@ManyToOne
+	@JsonIgnoreProperties(value = { "type", "registeredDate", "registeredtime", "treeImg", "rewards", "longitude", "latitude", "treeOwner" })
 	@JoinColumn(name = "tree_id", nullable = false)
 	private Tree tree;
 }

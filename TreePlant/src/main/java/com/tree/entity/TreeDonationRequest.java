@@ -1,5 +1,7 @@
 package com.tree.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,21 +12,28 @@ import lombok.*;
 @AllArgsConstructor
 public class TreeDonationRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "requester_id", nullable = false)
-    private TreeOwner requester;
+	@ManyToOne
+	@JsonIgnoreProperties(value = { "password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
+			"totalRewards", "country", "state", "district", "taluka", "village", "pincode", "longitude", "latitude",
+			"landmark", "mobileNumber", "email", "dob" })
+	@JoinColumn(name = "requester_id", nullable = false)
+	private TreeOwner requester;
 
-    @ManyToOne
-    @JoinColumn(name = "donator_id", nullable = false)
-    private TreeDonation donation;
+	@ManyToOne
+	@JsonIgnoreProperties(value = { "password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
+			"totalRewards", "country", "state", "district", "taluka", "village", "pincode", "longitude", "latitude",
+			"landmark", "mobileNumber", "email", "dob" })
 
-    @Column(nullable = false)
-    private int requestedQuantity;
+	@JoinColumn(name = "donator_id", nullable = false)
+	private TreeDonation donation;
 
-    @Enumerated(EnumType.STRING)
-    private RequestStatus status = RequestStatus.PENDING;
+	@Column(nullable = false)
+	private int requestedQuantity;
+
+	@Enumerated(EnumType.STRING)
+	private RequestStatus status = RequestStatus.PENDING;
 }
