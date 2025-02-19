@@ -24,10 +24,10 @@ public class TreePlantationEvent {
 	private String place;
 
 	@Column(nullable = false)
-	private LocalDate date;
+	private String date;
 
 	@Column(nullable = false)
-	private LocalTime time;
+	private String time;
 
 	@Column(length = 500)
 	private String description;
