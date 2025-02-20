@@ -45,7 +45,7 @@ public class TreeScanService {
 				.orElseThrow(() -> new RuntimeException("Tree not found with ID: " + treeScan.getTree().getId()));
 
 		// Fetch the associated TreeOwner
-		TreeOwner treeOwner = tree.getTreeOwner();
+		TreeOwner treeOwner = treeOwnerRepository.getOne(tree.getTreeOwner().getId());
 
 		// Increment rewards by 2
 		tree.setRewards(tree.getRewards() + 2);

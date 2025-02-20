@@ -36,16 +36,23 @@ public class TreeService {
 	// ✅ Register new tree owner
 	public Tree createTree(MultipartFile image, Tree tree) throws IOException {
 		tree.setRewards(5); // Initial 5 rewards on tree registration
+		
 
-		TreeOwner treeOwner = tree.getTreeOwner();
-
-		if (treeOwner != null) { // Ensure treeOwner is not null
+		//TreeOwner treeOwner = tree.getTreeOwner();
+		
+		
+		TreeOwner treeOwner;
+		try {
+			treeOwner = treeOwnerepo.getOne(tree.getTreeOwner().getId());
 			treeOwner.setTotalTrees(treeOwner.getTotalTrees() + 1);
 			treeOwner.setTotalRewards(treeOwner.getTotalRewards() + 5);
-
-			// ✅ Save the updated TreeOwner
 			treeOwnerepo.save(treeOwner);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+
 		String imgname = fileService.uploadImage(treepath, image);
 		tree.setTreeImg(imgname);
 
