@@ -22,7 +22,7 @@ public class Feedback {
 	private Long id;
 
 	@ManyToOne
-	@JsonIgnoreProperties(value = { "id", "password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
+	@JsonIgnoreProperties(value = {"password", "firstName", "middleName", "lastName", "totalTrees", "profileImg",
 			"totalRewards", "country", "state", "district", "taluka", "village", "pincode", "longitude", "latitude",
 			"landmark", "mobileNumber", "email", "dob" })
 	@JoinColumn(name = "tree_owner_id", nullable = false)
